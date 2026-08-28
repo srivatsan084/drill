@@ -1,6 +1,5 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 
-import GetStarted from './pages/GetStarted/GetStarted'
 import Auth from './pages/Auth/Auth'
 import MainWorkspace from './pages/MainWorkspace/MainWorkspace'
 import Investigate from './pages/Investigate/Investigate'
@@ -10,7 +9,7 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<GetStarted />} />
+        <Route path="/" element={<Auth />} />
         <Route path="/auth" element={<Auth />} />
         <Route path="/workspace" element={<MainWorkspace />} />
         <Route path="/investigate" element={<Investigate />} />
