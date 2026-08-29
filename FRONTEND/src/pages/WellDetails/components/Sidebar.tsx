@@ -70,20 +70,15 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeTab = 'Wells' }) => {
   const displayRole = user?.role || 'Lead Drilling Engineer';
 
   return (
-    <aside className="w-64 bg-white border-r border-gray-200 flex flex-col justify-between h-screen sticky top-0 shrink-0 select-none z-20">
+    <aside className="w-64 bg-white border-r border-gray-200 flex flex-col justify-between h-screen sticky top-0 shrink-0 select-none z-20 font-average">
       <div>
-        {/* Logo & Subtitle Section */}
-        <div className="p-5 flex items-center gap-3 border-b border-gray-100">
-          <div className="w-9 h-9 bg-[#D92D20] rounded-md flex items-center justify-center text-white font-extrabold text-lg shadow-sm">
-            <span className="text-[#FDB813]">N</span>
+        {/* Logo Section - Clean NWIS Text (Warm Yellow Accent) */}
+        <div className="p-5 border-b border-gray-100">
+          <div className="font-extrabold text-2xl tracking-tight leading-none text-gray-900">
+            NWIS
           </div>
-          <div>
-            <div className="font-extrabold text-xl tracking-tight leading-none text-gray-900">
-              NWIS
-            </div>
-            <div className="text-[9.5px] text-gray-600 font-bold tracking-wider uppercase mt-1">
-              Well Overview - Dashboard
-            </div>
+          <div className="text-[10px] text-[#b78600] font-bold tracking-wider uppercase mt-1">
+            Dashboard
           </div>
         </div>
 
@@ -110,7 +105,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeTab = 'Wells' }) => {
         </nav>
       </div>
 
-      {/* Footer / User Profile Section */}
+      {/* Footer / Standardized User Profile Section */}
       <div className="p-3 border-t border-gray-100 space-y-2">
         <button
           onClick={() => navigate('/workspace')}
@@ -120,8 +115,8 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeTab = 'Wells' }) => {
           <span>Help & Support</span>
         </button>
 
-        <div className="flex items-center gap-3 p-2 bg-gray-50 rounded-xl border border-gray-100 mt-2">
-          <div className="w-9 h-9 rounded-full bg-[#D92D20] text-white flex items-center justify-center font-extrabold text-sm border border-gray-200 shrink-0">
+        <div className="flex items-center gap-3 p-2.5 bg-gray-50 rounded-xl border border-gray-100 mt-2">
+          <div className="w-9 h-9 rounded-full bg-[#FDB813] text-gray-900 flex items-center justify-center font-extrabold text-sm border border-gray-200 shrink-0 shadow-2xs">
             {displayEmail.charAt(0).toUpperCase()}
           </div>
           <div className="flex-1 min-w-0">

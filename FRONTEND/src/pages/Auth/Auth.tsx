@@ -124,7 +124,7 @@ export const Auth: React.FC = () => {
         status: 'SUCCESS',
       });
 
-      navigate('/wells/OIL-159-F-7');
+      navigate('/workspace');
     } else {
       // Strictly Deny Access if account does not exist in Hash Table
       setErrorMessage(
@@ -241,7 +241,7 @@ export const Auth: React.FC = () => {
           status: 'SUCCESS',
         });
 
-        navigate('/wells/OIL-159-F-7');
+        navigate('/workspace');
       } else {
         const attempts = failedCount + 1;
         setFailedCount(attempts);

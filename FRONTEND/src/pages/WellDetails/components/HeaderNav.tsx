@@ -48,7 +48,7 @@ export const HeaderNav: React.FC<HeaderNavProps> = ({ wellId }) => {
           <h1 className="text-2xl font-bold text-gray-900 tracking-tight mt-0.5 leading-tight">
             Well Overview
           </h1>
-          <p className="text-[11px] text-[#D92D20] font-bold uppercase tracking-wider mt-0.5">
+          <p className="text-[11px] text-[#b78600] font-bold uppercase tracking-wider mt-0.5">
             Dashboard
           </p>
         </div>

@@ -5,6 +5,8 @@ import Auth from './pages/Auth/Auth';
 import MainWorkspace from './pages/MainWorkspace/MainWorkspace';
 import Investigate from './pages/Investigate/Investigate';
 import WellDetails from './pages/WellDetails/WellDetails';
+import Explore from './pages/Explore/Explore';
+import MonitorAlerts from './pages/MonitorAlerts/MonitorAlerts';
 
 // Protected Route Guard ensuring authenticated access to dashboard
 const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
@@ -52,6 +54,38 @@ function App() {
             element={
               <ProtectedRoute>
                 <MainWorkspace />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/explore"
+            element={
+              <ProtectedRoute>
+                <Explore />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/monitor"
+            element={
+              <ProtectedRoute>
+                <MonitorAlerts />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/alerts"
+            element={
+              <ProtectedRoute>
+                <MonitorAlerts />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/monitor-alerts"
+            element={
+              <ProtectedRoute>
+                <MonitorAlerts />
               </ProtectedRoute>
             }
           />
