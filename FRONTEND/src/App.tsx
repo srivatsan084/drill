@@ -1,26 +1,73 @@
+import React from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-
+import { AuthProvider, useAuth } from './context/AuthContext';
 import Auth from './pages/Auth/Auth';
 import MainWorkspace from './pages/MainWorkspace/MainWorkspace';
 import Investigate from './pages/Investigate/Investigate';
 import WellDetails from './pages/WellDetails/WellDetails';
 
+// Protected Route Guard ensuring authenticated access to dashboard
+const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const { isAuthenticated } = useAuth();
+  return isAuthenticated ? <>{children}</> : <Navigate to="/login" replace />;
+};
+
 function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        {/* Set root URL '/' to load the Well Overview dashboard directly */}
-        <Route path="/" element={<WellDetails />} />
-        <Route path="/auth" element={<Auth />} />
-        <Route path="/login" element={<Auth />} />
-        <Route path="/workspace" element={<MainWorkspace />} />
-        <Route path="/investigate" element={<Investigate />} />
-        <Route path="/wells" element={<WellDetails />} />
-        <Route path="/wells/:wellId" element={<WellDetails />} />
-        <Route path="/well-details" element={<WellDetails />} />
-        <Route path="*" element={<Navigate to="/" replace />} />
-      </Routes>
-    </BrowserRouter>
+    <AuthProvider>
+      <BrowserRouter>
+        <Routes>
+          {/* Root '/' opens the Login Page by default */}
+          <Route path="/" element={<Auth />} />
+          <Route path="/login" element={<Auth />} />
+          <Route path="/auth" element={<Auth />} />
+
+          {/* Protected Well Dashboard Routes */}
+          <Route
+            path="/wells"
+            element={
+              <ProtectedRoute>
+                <WellDetails />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/wells/:wellId"
+            element={
+              <ProtectedRoute>
+                <WellDetails />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/well-details"
+            element={
+              <ProtectedRoute>
+                <WellDetails />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/workspace"
+            element={
+              <ProtectedRoute>
+                <MainWorkspace />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/investigate"
+            element={
+              <ProtectedRoute>
+                <Investigate />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
+      </BrowserRouter>
+    </AuthProvider>
   );
 }
 
