@@ -49,40 +49,46 @@ export interface OffsetEvent {
   date: string;
 }
 
-export interface MdVsTvdPoint {
+export interface MdVsTvdSeries {
   md: number;
-  'OIL-159-F-7': number;
-  'OIL-159-F-4': number;
-  'OIL-159-F-5': number;
-  'OIL-159-F-6': number;
+  'NO 15/9-F-4'?: number;
+  'NO 15/9-F-7'?: number;
+  'NO 15/9-F-9'?: number;
 }
 
-export interface RateOfTurnPoint {
-  tvd: number;
-  'OIL-159-F-4': number;
-  'OIL-159-F-5': number;
-  'OIL-159-F-6': number;
+export interface FacetPoint {
+  x: number;
+  y: number;
 }
 
-export interface InclinationAzimuthPoint {
-  inclination: number;
-  'OIL-159-F-4': number;
-  'OIL-159-F-5': number;
-  'OIL-159-F-6': number;
+export interface FacetWellSeries {
+  wellId: 'NO 15/9-F-4' | 'NO 15/9-F-7' | 'NO 15/9-F-9';
+  color: string;
+  points: FacetPoint[];
+  xMin?: number;
+  xMax?: number;
+  yMin?: number;
+  yMax?: number;
 }
 
-export interface RateOfBuildPoint {
-  tvd: number;
-  'OIL-159-F-4': number;
-  'OIL-159-F-5': number;
-  'OIL-159-F-6': number;
+export interface FacetChartConfig {
+  title: string;
+  yLabel: string;
+  xLabel: string;
+  yMin: number;
+  yMax: number;
+  xMin: number;
+  xMax: number;
+  yTicks: number[];
+  xTicks: number[];
+  series: FacetWellSeries[];
 }
 
 export interface DrillingAnalyticsData {
-  mdVsTvd: MdVsTvdPoint[];
-  rateOfTurn: RateOfTurnPoint[];
-  inclinationAzimuth: InclinationAzimuthPoint[];
-  rateOfBuild: RateOfBuildPoint[];
+  mdVsTvd: MdVsTvdSeries[];
+  rateOfTurn: FacetChartConfig;
+  inclinationAzimuth: FacetChartConfig;
+  rateOfBuild: FacetChartConfig;
 }
 
 export interface MudProgram {
