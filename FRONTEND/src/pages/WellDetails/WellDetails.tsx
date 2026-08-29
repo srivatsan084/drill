@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, Link } from 'react-router-dom';
 import { Sidebar } from './components/Sidebar';
 import { HeaderNav } from './components/HeaderNav';
 import { WellHeaderInfo } from './components/WellHeaderInfo';
@@ -46,11 +46,11 @@ export const WellDetails: React.FC = () => {
 
   if (loading) {
     return (
-      <div className="flex h-screen w-full bg-[#F4F6F9]">
+      <div className="flex h-screen w-full bg-[#FAF9F6] font-average">
         <Sidebar activeTab="Wells" />
         <div className="flex-1 flex flex-col justify-center items-center">
           <div className="w-12 h-12 border-4 border-[#FDB813] border-t-transparent rounded-full animate-spin"></div>
-          <p className="mt-4 text-sm font-semibold text-gray-700">Loading Well Overview ({currentWellId})...</p>
+          <p className="mt-4 text-sm font-bold text-gray-800">Loading Well Overview ({currentWellId})...</p>
         </div>
       </div>
     );
@@ -58,17 +58,17 @@ export const WellDetails: React.FC = () => {
 
   if (error || !wellData) {
     return (
-      <div className="flex h-screen w-full bg-[#F4F6F9]">
+      <div className="flex h-screen w-full bg-[#FAF9F6] font-average">
         <Sidebar activeTab="Wells" />
         <div className="flex-1 flex flex-col justify-center items-center p-6 text-center">
-          <div className="bg-red-50 text-red-700 p-4 rounded-xl border border-red-200 max-w-md">
+          <div className="bg-amber-50 text-amber-900 p-6 rounded-xl border border-amber-200 max-w-md shadow-xs">
             <h3 className="font-bold text-lg">Error Loading Data</h3>
-            <p className="text-sm mt-1">{error || 'Well details not found.'}</p>
+            <p className="text-sm mt-1 text-gray-600">{error || 'Well details not found.'}</p>
             <button
               onClick={() => navigate('/workspace')}
-              className="mt-4 px-4 py-2 bg-gray-900 text-white rounded-lg text-xs font-semibold"
+              className="mt-5 px-4 py-2.5 bg-black text-[#FDB813] font-bold rounded-lg text-xs tracking-wider uppercase hover:bg-gray-900 transition-colors"
             >
-              Return to Workspace
+              Return to Map Workspace
             </button>
           </div>
         </div>
@@ -77,17 +77,50 @@ export const WellDetails: React.FC = () => {
   }
 
   return (
-    <div className="flex min-h-screen w-full bg-[#F4F6F9] font-average">
+    <div className="flex min-h-screen w-full bg-[#FAF9F6] text-black font-average">
       {/* Fixed Sidebar */}
       <Sidebar activeTab="Wells" />
 
       {/* Main Scrollable Content Container */}
       <div className="flex-1 flex flex-col min-w-0 overflow-y-auto">
-        {/* Sticky Header with Back Button */}
+        {/* Warm Yellow Top Navigation Header (Matching Explore & Alerts Pages) */}
         <HeaderNav wellId={wellData.header.wellId} />
 
         {/* Page Body Content */}
-        <main className="p-6 md:p-8 space-y-8 max-w-7xl w-full mx-auto">
+        <main className="p-6 md:p-10 space-y-10 max-w-7xl w-full mx-auto">
+          {/* Header Title Section matching Explore & Alerts page styling */}
+          <div className="border-b border-black/10 pb-6">
+            <div className="flex items-center gap-2 text-[10px] font-bold tracking-[0.25em] text-black/40 uppercase mb-2">
+              <span>WELL OVERVIEW</span>
+              <span>•</span>
+              <span className="text-[#b78600]">DRILLING INTELLIGENCE</span>
+            </div>
+
+            <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
+              <div>
+                <h1 className="text-4xl md:text-5xl font-bold tracking-[-0.04em] text-black">
+                  WELL {wellData.header.wellId}
+                </h1>
+                <div className="flex items-center gap-1.5 mt-2 text-xs font-bold text-[#b78600] tracking-wider uppercase">
+                  <span>LOCATION:</span>
+                  <span className="text-black font-semibold">{wellData.header.location}</span>
+                </div>
+                <p className="mt-2 max-w-2xl text-xs leading-6 text-black/50 font-medium">
+                  Comprehensive drilling telemetry, formation risk evaluation, 3D subsurface structure, offset event logs, and technical PDF reports.
+                </p>
+              </div>
+
+              <div className="flex items-center gap-2 self-start md:self-auto">
+                <span className="text-[10px] font-extrabold px-3 py-1.5 rounded bg-black text-[#FDB813] uppercase tracking-wider">
+                  {wellData.header.status}
+                </span>
+                <span className="text-[10px] font-bold px-3 py-1.5 rounded bg-white text-black border border-black/20 font-mono">
+                  MD: {wellData.header.measuredDepth}
+                </span>
+              </div>
+            </div>
+          </div>
+
           {/* Section 1: Well Summary Header Card */}
           <WellHeaderInfo header={wellData.header} />
 
@@ -115,14 +148,14 @@ export const WellDetails: React.FC = () => {
         </main>
 
         {/* Footer */}
-        <footer className="mt-12 border-t border-gray-200 bg-white py-6 px-8 text-xs text-gray-500 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <footer className="mt-12 border-t border-black/10 bg-white py-6 px-8 text-xs text-gray-500 flex flex-col sm:flex-row items-center justify-between gap-4">
           <p>© 2025 NWIS. All rights reserved.</p>
-          <div className="flex items-center gap-4">
-            <span>Version 1.0.0</span>
+          <div className="flex items-center gap-4 text-[11px] font-medium">
+            <span>Well Overview Dashboard</span>
             <span>•</span>
-            <span className="hover:underline cursor-pointer">Privacy Policy</span>
+            <span className="hover:underline cursor-pointer">Assam Basin Block 15/9</span>
             <span>•</span>
-            <span className="hover:underline cursor-pointer">Terms of Use</span>
+            <span className="hover:underline cursor-pointer">Security Protocol</span>
           </div>
         </footer>
       </div>

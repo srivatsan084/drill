@@ -125,19 +125,19 @@ export const OtherInformationCards: React.FC<OtherInformationCardsProps> = ({ da
 
           {/* Card 5: Lessons Learned */}
           <div className="bg-white rounded-xl border border-gray-200 p-4 shadow-2xs space-y-3">
-            <h4 className="text-xs font-bold text-gray-900 uppercase tracking-wider border-b border-gray-100 pb-2 flex items-center justify-between">
-              <span>Lessons Learned</span>
-              <span className="text-[10px] bg-red-50 text-[#D92D20] px-1.5 py-0.5 rounded font-bold">
+            <h4 className="text-xs font-bold text-[#b78600] uppercase tracking-wider border-b border-gray-100 pb-2 flex items-center justify-between">
+              <span className="text-[#b78600] font-extrabold">Lessons Learned</span>
+              <span className="text-[10px] bg-amber-50 text-[#b78600] px-1.5 py-0.5 rounded font-bold border border-amber-200/50">
                 {lessonsLearned.length} Insights
               </span>
             </h4>
             <div className="space-y-2.5 text-xs max-h-[160px] overflow-y-auto pr-1">
               {lessonsLearned.length > 0 ? (
                 lessonsLearned.map((item, idx) => (
-                  <div key={idx} className="bg-gray-50 p-2 rounded-lg border border-gray-100 space-y-1">
-                    <span className="font-bold text-[#D92D20] text-[10.5px] block">{item.category}</span>
-                    <p className="text-gray-700 text-[11px] leading-tight">{item.description}</p>
-                    <p className="text-gray-500 text-[10px] italic">💡 {item.recommendation}</p>
+                  <div key={idx} className="bg-amber-50/50 p-2 rounded-lg border border-amber-200/40 space-y-1">
+                    <span className="font-bold text-[#b78600] text-[10.5px] block">{item.category}</span>
+                    <p className="text-gray-800 text-[11px] leading-tight">{item.description}</p>
+                    <p className="text-[#b78600] text-[10px] italic font-medium">💡 {item.recommendation}</p>
                   </div>
                 ))
               ) : (
