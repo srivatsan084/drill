@@ -98,15 +98,19 @@ export const WellDetails: React.FC = () => {
           <WellStructureView imageSrc={wellData.wellStructureImage} />
 
           {/* Section 4: Historical Drilling Experiences & Offset Events */}
-          <HistoricalOffsetEvents
-            events={wellData.offsetEvents}
-            onViewAll={() => navigate('/workspace')}
-          />
+          <div id="offset-events-section">
+            <HistoricalOffsetEvents
+              events={wellData.offsetEvents}
+              onViewAll={() => navigate('/workspace')}
+            />
+          </div>
 
           {/* Section 5: Drilling Parameter Analytics (Charts) */}
-          <DrillingAnalyticsCharts analytics={wellData.analytics} />
+          <div id="analytics-section">
+            <DrillingAnalyticsCharts analytics={wellData.analytics} />
+          </div>
 
-          {/* Section 6: Other Information (Mud, Casing, Cementing, Formation Tops) */}
+          {/* Section 6: Other Information (Mud, Casing, Cementing, Formation Tops & Reports) */}
           <OtherInformationCards data={wellData.otherInformation} />
         </main>
 

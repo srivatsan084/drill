@@ -114,11 +114,30 @@ export interface FormationTopItem {
   isPayZone?: boolean;
 }
 
+export interface LessonLearnedItem {
+  category: string;
+  description: string;
+  recommendation: string;
+}
+
+export interface WellDocumentItem {
+  id: string;
+  title: string;
+  type: 'DDR' | 'WCR' | 'LOG' | 'REPORT';
+  fileName: string;
+  fileSize: string;
+  dateAdded: string;
+  fileUrl: string;
+  description: string;
+}
+
 export interface OtherInformationData {
   mudProgram: MudProgram;
   casingProgram: CasingProgram;
   cementingPractice: CementingPractice;
   formationTops: FormationTopItem[];
+  lessonsLearned?: LessonLearnedItem[];
+  documents?: WellDocumentItem[];
 }
 
 export interface WellFullDetails {

@@ -13,14 +13,14 @@ export const HeaderNav: React.FC<HeaderNavProps> = ({ wellId }) => {
     if (window.history.length > 1) {
       navigate(-1);
     } else {
-      navigate('/workspace');
+      navigate('/wells/OIL-159-F-7');
     }
   };
 
   return (
     <header className="sticky top-0 bg-white border-b border-gray-200 px-6 py-4 flex flex-col md:flex-row md:items-center justify-between gap-4 z-10 shadow-2xs">
       {/* Top Left Navigation: Back Button + Breadcrumbs + Page Title */}
-      <div className="flex flex-col gap-1">
+      <div className="flex flex-col gap-0.5">
         <div className="flex items-center gap-2 text-xs text-gray-500 font-medium">
           {/* Back Button */}
           <button
@@ -33,7 +33,7 @@ export const HeaderNav: React.FC<HeaderNavProps> = ({ wellId }) => {
           </button>
 
           <span
-            onClick={() => navigate('/workspace')}
+            onClick={() => navigate('/wells/OIL-159-F-7')}
             className="hover:underline cursor-pointer"
           >
             Dashboard
@@ -44,9 +44,14 @@ export const HeaderNav: React.FC<HeaderNavProps> = ({ wellId }) => {
           <span className="text-gray-900 font-semibold">Well ID: {wellId}</span>
         </div>
 
-        <h1 className="text-2xl font-bold text-gray-900 tracking-tight mt-0.5">
-          Well Overview
-        </h1>
+        <div>
+          <h1 className="text-2xl font-bold text-gray-900 tracking-tight mt-0.5 leading-tight">
+            Well Overview
+          </h1>
+          <p className="text-[11px] text-[#D92D20] font-bold uppercase tracking-wider mt-0.5">
+            Dashboard
+          </p>
+        </div>
       </div>
 
       {/* Top Right: Search and Notifications */}
