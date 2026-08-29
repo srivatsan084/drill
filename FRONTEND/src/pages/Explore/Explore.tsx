@@ -12,7 +12,7 @@ function Explore() {
   const [search, setSearch] = useState('')
   const [showWellList, setShowWellList] = useState(false)
   const [radius, setRadius] = useState(5)
-  const [selectedWell, setSelectedWell] = useState<Well | null>(wells[1])
+  const [selectedWell, setSelectedWell] = useState<Well | null>(null)
 
   const filteredWells = useMemo(() => {
     if (!search.trim()) return wells

@@ -8,7 +8,7 @@ import {
 import { useNavigate } from 'react-router-dom'
 import type { Well } from '../data/wells'
 
-const API_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY
+const API_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY || 'AIzaSyA2N9EL2yoH7ud6tEcgxtkbUYIHaSqUj8E'
 
 type WellMapProps = {
   activeWell: Well
