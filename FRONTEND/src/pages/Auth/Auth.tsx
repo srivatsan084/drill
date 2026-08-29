@@ -55,6 +55,12 @@ export const Auth: React.FC = () => {
   const [signupConfirmPassword, setSignupConfirmPassword] = useState('');
   const [acceptTerms, setAcceptTerms] = useState(false);
 
+  // Persistent Anti-Spam Access Request Tracker
+  const [submittedEmails, setSubmittedEmails] = useState<string[]>(() => {
+    const saved = localStorage.getItem('nwis_submitted_access_requests');
+    return saved ? JSON.parse(saved) : [];
+  });
+
   // Registration Pending Approval Banner State
   const [isRequestPending, setIsRequestPending] = useState(false);
 
@@ -177,7 +183,6 @@ export const Auth: React.FC = () => {
     if (window.google?.accounts?.id) {
       window.google.accounts.id.prompt((notification: any) => {
         if (notification.isNotDisplayed() || notification.isSkippedMoment()) {
-          // Prompt user to select their Google account
           window.google.accounts.id.renderButton(
             document.getElementById('googleSignInButtonContainer'),
             { theme: 'outline', size: 'large', width: 320 }
@@ -268,11 +273,20 @@ export const Auth: React.FC = () => {
     }
   };
 
-  // Handle New User Access Request (DOES NOT GRANT ACCESS; Displays Request Pending Approval Message)
+  // Anti-Spam New User Access Request (Blocks multiple submissions from same user/email)
   const handleSignupSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setErrorMessage(null);
     setSuccessMessage(null);
+
+    const normalizedSignupEmail = signupEmail.trim().toLowerCase();
+
+    // Check if user has already submitted an access request
+    if (submittedEmails.includes(normalizedSignupEmail)) {
+      setErrorMessage('An access request has already been submitted for this email. Multiple requests are blocked to prevent spamming.');
+      setIsRequestPending(true);
+      return;
+    }
 
     if (signupPassword !== signupConfirmPassword) {
       setErrorMessage('Passwords do not match.');
@@ -289,6 +303,11 @@ export const Auth: React.FC = () => {
 
     setLoading(true);
     setTimeout(() => {
+      // Record email persistently in submitted list to block spamming
+      const updatedList = [...submittedEmails, normalizedSignupEmail];
+      setSubmittedEmails(updatedList);
+      localStorage.setItem('nwis_submitted_access_requests', JSON.stringify(updatedList));
+
       setLoading(false);
       setIsRequestPending(true);
     }, 600);
@@ -580,6 +599,8 @@ export const Auth: React.FC = () => {
                     setIsSignup(true);
                     setIsResetMode(false);
                     setIsRequestPending(false);
+                    setErrorMessage(null);
+                    setSuccessMessage(null);
                   }}
                 >
                   Signup Now
@@ -592,120 +613,118 @@ export const Auth: React.FC = () => {
           <div className="form signup">
             <span className="title">Registration</span>
 
-            {/* REQUEST PENDING APPROVAL MESSAGE */}
-            {isRequestPending ? (
-              <div style={{ marginTop: '16px', padding: '16px', background: '#fffbeb', border: '1px solid #fde68a', borderRadius: '8px', color: '#92400e', fontSize: '12px', lineHeight: 1.5 }}>
-                <h3 style={{ margin: '0 0 8px 0', fontSize: '15px', fontWeight: '800', color: '#78350f' }}>
+            {errorMessage && (
+              <div style={{ marginTop: '10px', padding: '6px 10px', background: '#fef2f2', border: '1px solid #fecaca', borderRadius: '5px', color: '#991b1b', fontSize: '11.5px' }}>
+                {errorMessage}
+              </div>
+            )}
+
+            <form onSubmit={handleSignupSubmit}>
+              <label className="input-field">
+                <input
+                  type="text"
+                  value={signupName}
+                  onChange={(e) => setSignupName(e.target.value)}
+                  placeholder="Enter your name"
+                  required
+                />
+                <i className="uil uil-user icon" aria-hidden="true"></i>
+              </label>
+
+              <label className="input-field">
+                <input
+                  type="email"
+                  value={signupEmail}
+                  onChange={(e) => setSignupEmail(e.target.value)}
+                  placeholder="Enter your email"
+                  required
+                />
+                <i className="uil uil-envelope icon" aria-hidden="true"></i>
+              </label>
+
+              <label className="input-field">
+                <input
+                  type={passwordType}
+                  className="password"
+                  value={signupPassword}
+                  onChange={(e) => setSignupPassword(e.target.value)}
+                  placeholder="Create a password"
+                  required
+                />
+                <i className="uil uil-lock icon" aria-hidden="true"></i>
+              </label>
+
+              {/* Password Strength Meter */}
+              {signupPassword.length > 0 && (
+                <div style={{ marginTop: '4px', fontSize: '10.5px' }}>
+                  <span>Strength: <strong>{signupPasswordStrength.label}</strong></span>
+                  <div style={{ height: '3.5px', background: '#e2e8f0', borderRadius: '2px', marginTop: '2px', overflow: 'hidden' }}>
+                    <div
+                      style={{
+                        height: '100%',
+                        width: `${(signupPasswordStrength.score / 4) * 100}%`,
+                        background: signupPasswordStrength.score <= 1 ? '#ef4444' : signupPasswordStrength.score === 2 ? '#f59e0b' : '#10b981',
+                        transition: 'width 0.3s ease'
+                      }}
+                    ></div>
+                  </div>
+                </div>
+              )}
+
+              <label className="input-field">
+                <input
+                  type={passwordType}
+                  className="password"
+                  value={signupConfirmPassword}
+                  onChange={(e) => setSignupConfirmPassword(e.target.value)}
+                  placeholder="Confirm a password"
+                  required
+                />
+                <i className="uil uil-lock icon" aria-hidden="true"></i>
+                <button
+                  className="showHidePw"
+                  type="button"
+                  aria-label={showPassword ? 'Hide passwords' : 'Show passwords'}
+                  onClick={() => setShowPassword((current) => !current)}
+                >
+                  <i className={`uil ${eyeIcon}`} aria-hidden="true"></i>
+                </button>
+              </label>
+
+              <div className="checkbox-text">
+                <label className="checkbox-content text">
+                  <input
+                    type="checkbox"
+                    checked={acceptTerms}
+                    onChange={(e) => setAcceptTerms(e.target.checked)}
+                  />
+                  I accepted all terms and conditions
+                </label>
+              </div>
+
+              <div className="input-field button">
+                <input
+                  type="submit"
+                  value={loading ? 'Submitting Request...' : 'Request Access'}
+                  disabled={loading}
+                />
+              </div>
+            </form>
+
+            {/* REQUEST PENDING APPROVAL MESSAGE SHOWN AFTER PASSWORD & REQUEST ACCESS IS CLICKED */}
+            {isRequestPending && (
+              <div style={{ marginTop: '16px', padding: '14px', background: '#fffbeb', border: '1px solid #fde68a', borderRadius: '8px', color: '#92400e', fontSize: '11.5px', lineHeight: 1.5 }}>
+                <h3 style={{ margin: '0 0 6px 0', fontSize: '14px', fontWeight: '800', color: '#78350f' }}>
                   Request Pending Approval
                 </h3>
-                <p style={{ margin: '0 0 12px 0' }}>
-                  Your access request has been sent to the administrator.<br />
-                  You’ll be able to access the platform once your request is approved.
+                <p style={{ margin: '0 0 10px 0' }}>
+                  An access request has already been submitted for this email.<br />
+                  Multiple requests are blocked to prevent spamming.
                 </p>
-                <div style={{ padding: '8px', background: '#fef3c7', borderRadius: '6px', fontWeight: '700', color: '#92400e' }}>
+                <div style={{ padding: '6px 10px', background: '#fef3c7', borderRadius: '6px', fontWeight: '700', color: '#92400e' }}>
                   Status: ⏳ Awaiting Approval
                 </div>
               </div>
-            ) : (
-              <>
-                {errorMessage && (
-                  <div style={{ marginTop: '10px', padding: '6px 10px', background: '#fef2f2', border: '1px solid #fecaca', borderRadius: '5px', color: '#991b1b', fontSize: '11.5px' }}>
-                    {errorMessage}
-                  </div>
-                )}
-
-                <form onSubmit={handleSignupSubmit}>
-                  <label className="input-field">
-                    <input
-                      type="text"
-                      value={signupName}
-                      onChange={(e) => setSignupName(e.target.value)}
-                      placeholder="Enter your name"
-                      required
-                    />
-                    <i className="uil uil-user icon" aria-hidden="true"></i>
-                  </label>
-
-                  <label className="input-field">
-                    <input
-                      type="email"
-                      value={signupEmail}
-                      onChange={(e) => setSignupEmail(e.target.value)}
-                      placeholder="Enter your email"
-                      required
-                    />
-                    <i className="uil uil-envelope icon" aria-hidden="true"></i>
-                  </label>
-
-                  <label className="input-field">
-                    <input
-                      type={passwordType}
-                      className="password"
-                      value={signupPassword}
-                      onChange={(e) => setSignupPassword(e.target.value)}
-                      placeholder="Create a password"
-                      required
-                    />
-                    <i className="uil uil-lock icon" aria-hidden="true"></i>
-                  </label>
-
-                  {/* Password Strength Meter */}
-                  {signupPassword.length > 0 && (
-                    <div style={{ marginTop: '4px', fontSize: '10.5px' }}>
-                      <span>Strength: <strong>{signupPasswordStrength.label}</strong></span>
-                      <div style={{ height: '3.5px', background: '#e2e8f0', borderRadius: '2px', marginTop: '2px', overflow: 'hidden' }}>
-                        <div
-                          style={{
-                            height: '100%',
-                            width: `${(signupPasswordStrength.score / 4) * 100}%`,
-                            background: signupPasswordStrength.score <= 1 ? '#ef4444' : signupPasswordStrength.score === 2 ? '#f59e0b' : '#10b981',
-                            transition: 'width 0.3s ease'
-                          }}
-                        ></div>
-                      </div>
-                    </div>
-                  )}
-
-                  <label className="input-field">
-                    <input
-                      type={passwordType}
-                      className="password"
-                      value={signupConfirmPassword}
-                      onChange={(e) => setSignupConfirmPassword(e.target.value)}
-                      placeholder="Confirm a password"
-                      required
-                    />
-                    <i className="uil uil-lock icon" aria-hidden="true"></i>
-                    <button
-                      className="showHidePw"
-                      type="button"
-                      aria-label={showPassword ? 'Hide passwords' : 'Show passwords'}
-                      onClick={() => setShowPassword((current) => !current)}
-                    >
-                      <i className={`uil ${eyeIcon}`} aria-hidden="true"></i>
-                    </button>
-                  </label>
-
-                  <div className="checkbox-text">
-                    <label className="checkbox-content text">
-                      <input
-                        type="checkbox"
-                        checked={acceptTerms}
-                        onChange={(e) => setAcceptTerms(e.target.checked)}
-                      />
-                      I accepted all terms and conditions
-                    </label>
-                  </div>
-
-                  <div className="input-field button">
-                    <input
-                      type="submit"
-                      value={loading ? 'Submitting Request...' : 'Request Access'}
-                      disabled={loading}
-                    />
-                  </div>
-                </form>
-              </>
             )}
 
             <div className="login-signup">
@@ -717,6 +736,9 @@ export const Auth: React.FC = () => {
                   onClick={(event) => {
                     event.preventDefault();
                     setIsSignup(false);
+                    setIsRequestPending(false);
+                    setErrorMessage(null);
+                    setSuccessMessage(null);
                   }}
                 >
                   Login Now
