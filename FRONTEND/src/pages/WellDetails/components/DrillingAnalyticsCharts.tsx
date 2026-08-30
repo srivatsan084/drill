@@ -368,10 +368,10 @@ export const DrillingAnalyticsCharts: React.FC<DrillingAnalyticsChartsProps> = (
   };
 
   return (
-    <div className="bg-white rounded-xl border border-gray-200 p-6 shadow-2xs space-y-5">
-      <div className="border-b border-gray-100 pb-3">
-        <h3 className="text-base font-bold text-gray-900">Drilling Parameter Analytics</h3>
-        <p className="text-xs text-gray-500 mt-0.5">
+    <div className="bg-white rounded-2xl border border-gray-200 p-8 shadow-xs space-y-6 font-average">
+      <div className="border-b border-gray-100 pb-4">
+        <h3 className="text-lg font-bold text-gray-900">Drilling Parameter Analytics</h3>
+        <p className="text-xs text-gray-500 mt-1">
           Comparative multi-well parameter plots for offset wells (NO 15/9-F-4, NO 15/9-F-7, NO 15/9-F-9)
         </p>
       </div>

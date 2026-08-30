@@ -99,9 +99,9 @@ function Investigate() {
 
       {/* ================= PAGE ================= */}
 
-      <section className="px-8 pb-16 pt-12">
+      <section className="px-8 md:px-12 pb-16 pt-12 max-w-[1500px] w-full mx-auto">
 
-        <div className="mx-auto max-w-7xl">
+        <div className="w-full">
 
           {/* ================= HEADER ================= */}
 
@@ -113,7 +113,7 @@ function Investigate() {
                 INVESTIGATION
               </p>
 
-              <h1 className="text-5xl font-bold tracking-[-0.04em]">
+              <h1 className="text-6xl md:text-7xl font-extrabold tracking-[-0.04em]">
                 CORRELATION
               </h1>
 

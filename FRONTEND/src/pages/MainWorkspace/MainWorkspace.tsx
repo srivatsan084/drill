@@ -142,9 +142,9 @@ function MainWorkspace() {
 
       {/* ================= MAIN ================= */}
 
-      <section className="px-8 pb-10 pt-12">
+      <section className="px-8 md:px-12 pb-16 pt-12 max-w-[1500px] w-full mx-auto">
 
-        <div className="mx-auto max-w-7xl">
+        <div className="w-full">
 
 
           {/* ================= CENTERED HEADER ================= */}

@@ -8,6 +8,8 @@ import WellDetails from './pages/WellDetails/WellDetails';
 import Explore from './pages/Explore/Explore';
 import MonitorAlerts from './pages/MonitorAlerts/MonitorAlerts';
 
+import GetStarted from './pages/GetStarted/GetStarted';
+
 // Protected Route Guard ensuring authenticated access to dashboard
 const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { isAuthenticated } = useAuth();
@@ -19,8 +21,11 @@ function App() {
     <AuthProvider>
       <BrowserRouter>
         <Routes>
-          {/* Root '/' opens the Login Page by default */}
-          <Route path="/" element={<Auth />} />
+          {/* Root '/' opens the GetStarted Page (1st Webpage) */}
+          <Route path="/" element={<GetStarted />} />
+          <Route path="/get-started" element={<GetStarted />} />
+
+          {/* Authentication Page */}
           <Route path="/login" element={<Auth />} />
           <Route path="/auth" element={<Auth />} />
 

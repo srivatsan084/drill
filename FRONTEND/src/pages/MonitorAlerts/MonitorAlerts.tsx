@@ -132,7 +132,7 @@ function MonitorAlerts() {
 
       {/* ================= PAGE ================= */}
 
-      <section className="px-8 pb-16 pt-12 max-w-7xl mx-auto">
+      <section className="px-8 md:px-12 pb-16 pt-12 max-w-[1500px] w-full mx-auto">
 
         <div>
 
@@ -148,7 +148,7 @@ function MonitorAlerts() {
 
               <div>
 
-                <h1 className="text-5xl font-bold tracking-[-0.04em]">
+                <h1 className="text-6xl md:text-7xl font-extrabold tracking-[-0.04em]">
                   ALERTS
                 </h1>
 
@@ -269,41 +269,28 @@ function MonitorAlerts() {
 
           {/* ================= SUMMARY METRICS ================= */}
 
-          <div className="mb-8 grid gap-px border border-black/15 bg-black/15 md:grid-cols-3">
+          <div className="mb-8 grid gap-px border border-black/15 bg-black/15 md:grid-cols-2">
 
-            <div className="bg-white p-6">
+            <div className="bg-white p-7">
 
-              <p className="text-[9px] font-bold tracking-[0.2em] text-black/40">
-                TOTAL ALERTS
-              </p>
-
-              <p className="mt-3 text-4xl font-bold">
-                {activeWellAlerts.length}
-              </p>
-
-            </div>
-
-
-            <div className="bg-white p-6">
-
-              <p className="text-[9px] font-bold tracking-[0.2em] text-black/40">
+              <p className="text-[9px] font-bold tracking-[0.2em] text-black/40 uppercase">
                 HIGH RISK
               </p>
 
-              <p className="mt-3 text-4xl font-bold text-red-500">
+              <p className="mt-3 text-5xl font-bold text-red-500">
                 {highAlerts}
               </p>
 
             </div>
 
 
-            <div className="bg-white p-6">
+            <div className="bg-white p-7">
 
-              <p className="text-[9px] font-bold tracking-[0.2em] text-black/40">
+              <p className="text-[9px] font-bold tracking-[0.2em] text-black/40 uppercase">
                 MEDIUM RISK
               </p>
 
-              <p className="mt-3 text-4xl font-bold text-[#b78600]">
+              <p className="mt-3 text-5xl font-bold text-[#b78600]">
                 {mediumAlerts || (activeWell.status === 'risk' ? 1 : 0)}
               </p>
 
@@ -314,7 +301,7 @@ function MonitorAlerts() {
 
           {/* ================= ALERT CONTENT ================= */}
 
-          <div className="grid gap-8 lg:grid-cols-[1fr_360px]">
+          <div className="grid gap-8 lg:grid-cols-[1fr_420px]">
 
 
             {/* ALERT LIST */}

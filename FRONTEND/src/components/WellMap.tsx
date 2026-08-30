@@ -33,6 +33,7 @@ function WellMap({
 
         <Map
           defaultCenter={activeWell.location}
+          center={activeWell.location}
           defaultZoom={12}
           mapId="3e5e69b3b31fc49e5bb18e05"
           gestureHandling="greedy"

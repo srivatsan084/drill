@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import {
+  LayoutDashboard,
   CircleDot,
   Compass,
   BarChart3,
   FileText,
+  Bell,
   Settings,
   HelpCircle,
   ChevronDown
@@ -32,7 +34,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeTab = 'Wells' }) => {
       }
     }
 
-    if (itemName === 'Reports & Documents') {
+    if (itemName === 'Reports' || itemName === 'Documents') {
       const elem = document.getElementById('reports-section');
       if (elem) {
         elem.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -48,9 +50,14 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeTab = 'Wells' }) => {
       }
     }
 
-    if (itemName === 'Wells') {
+    if (itemName === 'Alerts') {
+      navigate('/monitor');
+      return;
+    }
+
+    if (itemName === 'Dashboard' || itemName === 'Wells') {
       window.scrollTo({ top: 0, behavior: 'smooth' });
-      navigate(path);
+      navigate('/wells/OIL-159-F-7');
       return;
     }
 
@@ -58,10 +65,13 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeTab = 'Wells' }) => {
   };
 
   const navItems = [
+    { name: 'Dashboard', icon: LayoutDashboard, path: '/wells/OIL-159-F-7' },
     { name: 'Wells', icon: CircleDot, path: '/wells/OIL-159-F-7' },
     { name: 'Offset Wells', icon: Compass, path: '/wells/OIL-159-F-7' },
     { name: 'Analytics', icon: BarChart3, path: '/wells/OIL-159-F-7' },
-    { name: 'Reports & Documents', icon: FileText, path: '/wells/OIL-159-F-7' },
+    { name: 'Reports', icon: FileText, path: '/wells/OIL-159-F-7' },
+    { name: 'Alerts', icon: Bell, path: '/monitor' },
+    { name: 'Documents', icon: FileText, path: '/wells/OIL-159-F-7' },
     { name: 'Settings', icon: Settings, path: '/workspace' },
   ];
 
@@ -72,13 +82,18 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeTab = 'Wells' }) => {
   return (
     <aside className="w-64 bg-white border-r border-gray-200 flex flex-col justify-between h-screen sticky top-0 shrink-0 select-none z-20 font-average">
       <div>
-        {/* Logo Section - Clean NWIS Text (Warm Yellow Accent) */}
-        <div className="p-5 border-b border-gray-100">
-          <div className="font-extrabold text-2xl tracking-tight leading-none text-gray-900">
-            NWIS
+        {/* Logo Section matching screenshot */}
+        <div className="p-5 flex items-center gap-3 border-b border-gray-100">
+          <div className="w-9 h-9 bg-[#D92D20] rounded-md flex items-center justify-center text-white font-extrabold text-lg shadow-xs">
+            <span className="text-[#FDB813]">N</span>
           </div>
-          <div className="text-[10px] text-[#b78600] font-bold tracking-wider uppercase mt-1">
-            Dashboard
+          <div>
+            <div className="font-extrabold text-xl tracking-tight leading-none text-gray-900">
+              NWIS
+            </div>
+            <div className="text-[9.5px] text-gray-500 font-bold tracking-wider uppercase mt-1">
+              WELL INTELLIGENCE
+            </div>
           </div>
         </div>
 

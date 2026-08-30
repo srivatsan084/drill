@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, useNavigate, Link } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { Sidebar } from './components/Sidebar';
 import { HeaderNav } from './components/HeaderNav';
 import { WellHeaderInfo } from './components/WellHeaderInfo';
@@ -78,17 +78,17 @@ export const WellDetails: React.FC = () => {
 
   return (
     <div className="flex min-h-screen w-full bg-[#FAF9F6] text-black font-average">
-      {/* Fixed Sidebar */}
+      {/* Left Navigation Sidebar (Analytics, Reports & Documents, Offset Wells, Settings) */}
       <Sidebar activeTab="Wells" />
 
-      {/* Main Scrollable Content Container */}
-      <div className="flex-1 flex flex-col min-w-0 overflow-y-auto">
-        {/* Warm Yellow Top Navigation Header (Matching Explore & Alerts Pages) */}
+      {/* Main Content Area */}
+      <div className="flex-1 min-w-0 flex flex-col overflow-y-auto">
+        {/* Warm Yellow Top Navigation Header */}
         <HeaderNav wellId={wellData.header.wellId} />
 
-        {/* Page Body Content */}
-        <main className="p-6 md:p-10 space-y-10 max-w-7xl w-full mx-auto">
-          {/* Header Title Section matching Explore & Alerts page styling */}
+        {/* Page Body Content - Spacious Container */}
+        <main className="p-8 md:p-12 space-y-12 max-w-[1500px] w-full mx-auto">
+          {/* Header Title Section */}
           <div className="border-b border-black/10 pb-6">
             <div className="flex items-center gap-2 text-[10px] font-bold tracking-[0.25em] text-black/40 uppercase mb-2">
               <span>WELL OVERVIEW</span>
@@ -98,7 +98,7 @@ export const WellDetails: React.FC = () => {
 
             <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
               <div>
-                <h1 className="text-4xl md:text-5xl font-bold tracking-[-0.04em] text-black">
+                <h1 className="text-6xl md:text-7xl font-extrabold tracking-[-0.04em] text-black">
                   WELL {wellData.header.wellId}
                 </h1>
                 <div className="flex items-center gap-1.5 mt-2 text-xs font-bold text-[#b78600] tracking-wider uppercase">
